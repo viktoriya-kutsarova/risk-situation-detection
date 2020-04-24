@@ -1,0 +1,4 @@
+## Ignore unnecessary files
+
+## Tizen Studio specific files
+.settings
