@@ -6,6 +6,10 @@ class RiskIdentifier {
     	throw new Error('You have to implement the method measureRisk!');
     }
     
+    stopMeasuringRisk() {
+    	throw new Error('You have to implement the method stopMeasuringRisk!');
+    }
+    
     toString() {
         return Object.getPrototypeOf(this).constructor.name;
     }
@@ -23,19 +27,29 @@ class FallIndentifier extends RiskIdentifier {
     }
 
     measureRisk() {
-    	this.accelerometer.start(this.onsuccessSensorStart);
+    	console.log("Inside measure risk: " + this);
+    	/* Bind return a copy of the onSensorStart function with the this property set to the first argument.
+    	 * Here, this would be set to the FallIndentifier object.
+    	*/  
+    	this.accelerometer.start(this.onSensorStart.bind(this));
     }
     
-    onsuccessSensorStart() {
+    //callback to accelerometer.start
+    onSensorStart() {
     	console.log("Successfully started accelerometer");
+    	this.accelerometer.setChangeListener(this.onaccelerationChange, 500, 1);
+    }
+    
+    onaccelerationChange(sensorData) {
+    	console.log("######## Changed acceleration sensor data ########");
+    	console.log("Timestamp: " + Date.now());
+  	  	console.log("x: " + sensorData.x);
+  	  	console.log("y: " + sensorData.y);
+  	  	console.log("z: " + sensorData.z);
+    }
+    
+    stopMeasuringRisk() {
+    	this.accelerometer.unsetChangeListener();
+    	this.accelerometer.stop();
     }
 }
-
-function displayRiskIdentifiers(riskIdentifiers) {
-	console.log("inside: " + riskIdentifiers);
-	riskIdentifiers.forEach(risk => console.log(`Risk: ${risk.measureRisk()}`));
-}
-
-const riskIdentifiers = [new FallIndentifier("high")];
-console.log("risks: " + riskIdentifiers);
-console.log(displayRiskIdentifiers(riskIdentifiers));

@@ -1,6 +1,8 @@
 
 window.onload = function () {
-    // TODO:: Do your initialization job
+    
+	const riskIdentifiers = [new FallIndentifier("high")];
+	startMeasuringRisks(riskIdentifiers);
 
     // add eventListener for tizenhwkey
     document.addEventListener('tizenhwkey', function(e) {
@@ -19,3 +21,8 @@ window.onload = function () {
     });
     
 };
+
+function startMeasuringRisks(riskIdentifiers) {
+	console.log("Starting to measure risks.");
+	riskIdentifiers.forEach(risk => risk.measureRisk());
+}

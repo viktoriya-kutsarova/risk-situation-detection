@@ -2,3 +2,9 @@
 
 ## Tizen Studio specific files
 .settings
+
+## Build file
+*.wgt
+
+## Signature
+.sign
