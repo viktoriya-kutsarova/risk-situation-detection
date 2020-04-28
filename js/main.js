@@ -1,7 +1,7 @@
 
 window.onload = function () {
     
-	const riskIdentifiers = [new FallIndentifier("high")];
+	const riskIdentifiers = [new FallIndentifier(new CrowdSourcingRiskMitigator())];
 	startMeasuringRisks(riskIdentifiers);
 
     // add eventListener for tizenhwkey

@@ -1,4 +1,5 @@
-var accelerometerCapability = tizen.systeminfo.getCapability('http://tizen.org/feature/sensor.accelerometer');
+const accelerometerCapability = tizen.systeminfo.getCapability('http://tizen.org/feature/sensor.accelerometer');
+const fall_threshold = 10;
 
 class RiskIdentifier {
 	
@@ -16,7 +17,7 @@ class RiskIdentifier {
 }
 
 class FallIndentifier extends RiskIdentifier {
-    constructor() {
+    constructor(riskMitigator) {
         super();
         
         if (accelerometerCapability == true) {
@@ -24,6 +25,7 @@ class FallIndentifier extends RiskIdentifier {
         } else {
         	throw Error('Can not identify fall using accelerometer.');
         }
+        this.riskMitigator = riskMitigator;
     }
 
     measureRisk() {
@@ -37,7 +39,7 @@ class FallIndentifier extends RiskIdentifier {
     //callback to accelerometer.start
     onSensorStart() {
     	console.log("Successfully started accelerometer");
-    	this.accelerometer.setChangeListener(this.onaccelerationChange, 500, 1);
+    	this.accelerometer.setChangeListener(this.onaccelerationChange.bind(this), 500, 1);
     }
     
     onaccelerationChange(sensorData) {
@@ -46,6 +48,10 @@ class FallIndentifier extends RiskIdentifier {
   	  	console.log("x: " + sensorData.x);
   	  	console.log("y: " + sensorData.y);
   	  	console.log("z: " + sensorData.z);
+  	  	
+  	  	if (sensorData.z > fall_threshold) {
+  	  		this.riskMitigator.callForHelp();
+  	  	}
     }
     
     stopMeasuringRisk() {
