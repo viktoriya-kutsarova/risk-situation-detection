@@ -19,18 +19,32 @@ class CrowdSourcingRiskMitigator extends RiskMitigator {
 }
 
 async function callCrowdSCreateTask() {
+	
 	var formData = new FormData();
 
-	formData.append("email", 'testnewnew@test.com');
+	formData.append("email", 'test@mail.com');
 	formData.append("answer_choices", "y;n");
 	formData.append("file", "single_choice.php");
-	formData.append("question", "This person at location XYZ is in trouble. Can you help?");
-	formData.append("lng", 18.07227473706007);
-	formData.append("lat", 59.34945964097764);
-	formData.append("description", "No description yet");
+	formData.append("question", "Can you help?");
+	formData.append("description", "This person at location XYZ is in trouble.");
 	formData.append("type", "hit");
 	formData.append("hit_type", "single");
-		
+	
+	if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+        		(position) => {
+			    	 var crd = position.coords;
+			    	 formData.append("lat", crd.latitude);
+			    	 formData.append("lng", crd.longitude);
+			    	 createTask(formData);},
+			    (error) => {console.log(error)},
+			    {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000});
+    }
+	
+	return "";
+}
+
+async function createTask(formData) {
 	const response = await fetch(CREATE_TASK_URL, {
 	    method: 'POST',
 	    body: formData, // string or object
@@ -39,10 +53,10 @@ async function callCrowdSCreateTask() {
 	        'Credentials': 'same-origin',
 	        'Cookie': 'XDEBUG_SESSION=XDEBUG_ECLIPSE'
 	    }
-	  });
-	  const myJson = await response.json(); //extract JSON from the http response
-		  // do something with myJson
-	  console.log(myJson);
-	  
-	  return myJson;
+	});
+	const myJson = await response.json(); //extract JSON from the http response
+	// do something with myJson
+	console.log(myJson);
+  
+	return myJson;
 }

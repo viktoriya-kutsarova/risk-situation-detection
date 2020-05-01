@@ -29,7 +29,6 @@ class FallIndentifier extends RiskIdentifier {
     }
 
     measureRisk() {
-    	console.log("Inside measure risk: " + this);
     	/* Bind return a copy of the onSensorStart function with the this property set to the first argument.
     	 * Here, this would be set to the FallIndentifier object.
     	*/  
@@ -38,18 +37,12 @@ class FallIndentifier extends RiskIdentifier {
     
     //callback to accelerometer.start
     onSensorStart() {
-    	console.log("Successfully started accelerometer");
     	this.accelerometer.setChangeListener(this.onaccelerationChange.bind(this), 500, 1);
     }
     
     onaccelerationChange(sensorData) {
-    	console.log("######## Changed acceleration sensor data ########");
-    	console.log("Timestamp: " + Date.now());
-  	  	console.log("x: " + sensorData.x);
-  	  	console.log("y: " + sensorData.y);
-  	  	console.log("z: " + sensorData.z);
-  	  	
   	  	if (sensorData.z > fall_threshold) {
+  	  		console.log("Calling for help at " + Date.now());
   	  		this.riskMitigator.callForHelp();
   	  	}
     }

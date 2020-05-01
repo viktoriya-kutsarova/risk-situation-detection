@@ -6,5 +6,7 @@
     <icon src="icon.png"/>
     <name>RiskSituationDetection</name>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/location"/>
+    <feature name="http://tizen.org/feature/location.gps"/>
     <tizen:profile name="wearable"/>
 </widget>

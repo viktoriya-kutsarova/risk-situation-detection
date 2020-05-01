@@ -7,4 +7,5 @@
 *.wgt
 
 ## Signature
-.sign
+/.sign/
+.sign/
