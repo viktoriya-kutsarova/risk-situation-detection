@@ -1,9 +1,8 @@
-
 window.onload = function () {
 	
 	requestLocationPermission();
 	
-	const riskMitigator = new CrowdSourcingRiskMitigator();
+	const riskMitigator = new BluetoothRiskMitigator();
 	const riskIdentifiers = [new FallIndentifier(riskMitigator)];
 	startMeasuringRisks(riskIdentifiers);
 
@@ -11,7 +10,7 @@ window.onload = function () {
     document.addEventListener('tizenhwkey', function(e) {
         if(e.keyName == "back")
         	try {
-        		stopMeasuringRisks(riskIdentifiers)
+        		stopMeasuringRisks(riskIdentifiers);
         		tizen.application.getCurrentApplication().exit();
         	} catch (ignore) {
         	}
@@ -19,6 +18,7 @@ window.onload = function () {
 
     var textbox = document.querySelector('.contents');
     textbox.addEventListener("click", function(){
+
     	riskMitigator.callForHelp();
     });
     
