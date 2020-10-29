@@ -8,7 +8,7 @@ class RiskMitigator {
     }
 }
 
-class CrowdSourcingRiskMitigator extends RiskMitigator {
+class CrowdsensingRiskMitigator extends RiskMitigator {
 	
 	constructor() {
         super();
@@ -33,7 +33,7 @@ class BluetoothRiskMitigator extends RiskMitigator {
     }
 
 	sendDataToPhoneThroughBluetooth() {
-		if (this.socket == null) {
+		if (this.socket == null || this.socket.state == 'CLOSED') {
 			/* Retrieve known devices */
 			this.adapter.getKnownDevices(this.onGotDevices.bind(this));
 		} else {

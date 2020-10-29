@@ -3,7 +3,7 @@ window.onload = function () {
 	requestLocationPermission();
 	
 	const riskMitigator = new BluetoothRiskMitigator();
-	const riskIdentifiers = [new FallIndentifier(riskMitigator)];
+	const riskIdentifiers = [new GestureWristUpIdentifier(riskMitigator)];
 	startMeasuringRisks(riskIdentifiers);
 
     // add eventListener for tizenhwkey
@@ -20,6 +20,7 @@ window.onload = function () {
     textbox.addEventListener("click", function(){
 
     	riskMitigator.callForHelp();
+    		document.getElementById("textbox").textContent = "REQ HELP";
     });
     
 };
