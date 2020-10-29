@@ -20,7 +20,6 @@ window.onload = function () {
     textbox.addEventListener("click", function(){
 
     	riskMitigator.callForHelp();
-    		document.getElementById("textbox").textContent = "REQ HELP";
     });
     
 };

@@ -37,20 +37,7 @@ class BluetoothRiskMitigator extends RiskMitigator {
 			/* Retrieve known devices */
 			this.adapter.getKnownDevices(this.onGotDevices.bind(this));
 		} else {
-			if (navigator.geolocation) {
-		        navigator.geolocation.getCurrentPosition(
-		        		(position) => {
-					    	 var crdToStr = {lat: position.coords.latitude, lng : position.coords.longitude};
-					    	 var str = JSON.stringify(crdToStr);
-					    	 console.log('Sending coordinates to server: ' + str);
-					    	 var bytes = [];
-							 for (var j = 0; j < str.length; ++j)  
-								 bytes.push(str.charCodeAt(j));
-							 var length = this.socket.writeData(bytes);
-		        			},
-					    (error) => {console.log(error)},
-					    {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000});
-		    }
+			this.sendLocationData();
 		}
 	}
 
@@ -65,12 +52,36 @@ class BluetoothRiskMitigator extends RiskMitigator {
 	}
 
 	onConnectionToServiceByUUIDSuccess(sock) {
+		alert("Successfully connected");
 		console.log('socket connected: ' + sock);
+		document.getElementById("textbox").textContent = "REQ HELP";
 	    this.socket = sock;
 	}
 
 	onConnectionToServiceByUUIDError(error) {
+		alert("Error while trying to connect to phone. Try again!");
 		console.log('Error while connecting: ' + error.message);
+	}
+	
+	sendLocationData() {
+		if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(
+	        		(position) => {
+				    	 var crdToStr = {lat: position.coords.latitude, lng : position.coords.longitude};
+				    	 var str = JSON.stringify(crdToStr);
+				    	 console.log('Sending coordinates to server: ' + str);
+				    	 var bytes = [];
+						 for (var j = 0; j < str.length; ++j)  
+							 bytes.push(str.charCodeAt(j));
+						 var length = this.socket.writeData(bytes);
+						 alert("Successfully sent location to phone.");
+	        			},
+				    (error) => {
+				    	console.log(error);
+				    	alert("GPS position error. Try going outside. Error: " + error.message);
+				    	},
+				    {enableHighAccuracy: false, timeout: 10000, maximumAge: 0});
+	    }
 	}
 }
 
