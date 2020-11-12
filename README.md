@@ -36,7 +36,7 @@ The Risk Mitigator is the component responsible for mitigating the risky situati
 current implementation, the Risk Mitigator connects the Smartwatch to the Extended CrowdS crowdsensing system, which takes care
 of the rest. The current implementation of the Risk Mitigator connects using Bluetooth to a Smartphone that has Extended CrowdS installed.
 
-## How to extend the system
+## How to extend the application
 In order to add a new Risk Identifier, extend the class ***RiskIdentifier*** located in ***js/risk-identifier.js***.
 The two methods that need to be implemented are ***measureRisk()*** and ***stopMeasuringRisk()***.
 Then add the new identifier to the `const riskIdentifiers` in ***js/main.js***. For an example implementation of a RiskIdentifier,
