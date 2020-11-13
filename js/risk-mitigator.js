@@ -69,7 +69,7 @@ class BluetoothRiskMitigator extends RiskMitigator {
 	        		(position) => {
 				    	 var crdToStr = {lat: position.coords.latitude, lng : position.coords.longitude};
 				    	 var str = JSON.stringify(crdToStr);
-				    	 console.log('Sending coordinates to server: ' + str);
+				    	 console.log('Sending coordinates to phone: ' + str);
 				    	 var bytes = [];
 						 for (var j = 0; j < str.length; ++j)  
 							 bytes.push(str.charCodeAt(j));
@@ -77,10 +77,15 @@ class BluetoothRiskMitigator extends RiskMitigator {
 						 alert("Successfully sent location to phone.");
 	        			},
 				    (error) => {
-				    	console.log(error);
-				    	alert("GPS position error. Try going outside. Error: " + error.message);
-				    	},
-				    {enableHighAccuracy: false, timeout: 10000, maximumAge: 0});
+				    	console.log('Send message to phone without coordiantes due to GPS error.' + error);
+				    	var str = JSON.stringify({lat: "NO_COORDINATES", lng : "NO_COORDINATES"});
+				    	var bytes = [];
+						for (var j = 0; j < str.length; ++j)  
+							bytes.push(str.charCodeAt(j));
+						this.socket.writeData(bytes);
+				    	alert("Send message without coordiantes due to GPS error. " + error.message);
+				    },
+				    {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
 	    }
 	}
 }
