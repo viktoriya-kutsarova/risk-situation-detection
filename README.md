@@ -17,8 +17,8 @@ The Smartwatch and the Notebook need to be connected to the same WiFi network.
 1. Install Tizen Studio IDE.
 2. Import the project with min. version wearable 4.0.
 3. Using the Device Manager of Tizen Studio, connect to the Smartwatch.
-4. Sign the application.
-5. You can execute Run as/Debug as on the app and select the Smartwatch as a target.
+4. Sign the application in Tizen Studio. This happens automatically once you create a certificate from the Certificate Manager. [These steps](https://developer.samsung.com/galaxy-watch-develop/getting-certificates/create.html) could help you perform the process.
+5. You can execute Run as/Debug as on the app and select the Smartwatch as a target. This will install the application on the wearable device.
 
 This [tutorial](https://www.youtube.com/watch?v=BqWjvi9rQuY&ab_channel=SamsungDevelopers) may help you perform all of the steps.
 
